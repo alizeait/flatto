@@ -1,6 +1,6 @@
 {
   "name": "@alizeait/flatto",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A tiny (~200B) and fast nested object flattener",
   "scripts": {
     "build": "microbundle",
