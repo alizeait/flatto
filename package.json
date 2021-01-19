@@ -1,13 +1,15 @@
 {
   "name": "@alizeait/flatto",
   "version": "1.0.0",
-  "description": "A super fast and tiny nested object flattener",
+  "description": "A tiny (~200B) and fast nested object flattener",
   "scripts": {
     "build": "microbundle",
     "dev": "microbundle watch",
     "test": "npx jest"
   },
   "main": "dist/index.js",
+  "module": "dist/index.module.js",
+  "unpkg": "dist/index.umd.js",
   "browser": "dist/index.modern.js",
   "exports": {
     ".": {
@@ -28,6 +30,9 @@
   ],
   "keywords": [
     "object",
+    "array",
+    "nested",
+    "flat",
     "flatten",
     "seperator",
     "fast",
@@ -47,8 +52,11 @@
     "@types/jest": "^26.0.20",
     "benchmark": "^2.1.4",
     "codecov": "^3.8.1",
+    "flat": "^5.0.2",
+    "flatify-obj": "^2.0.0",
     "jest": "^26.6.3",
     "microbundle": "^0.13.0",
+    "objnest": "^5.1.0",
     "ts-jest": "^26.4.4",
     "typescript": "^4.1.3"
   }
