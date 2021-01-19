@@ -1,9 +1,10 @@
 const { Suite } = require("benchmark");
-const isUUID = require("is-uuid");
+const mock = require("../mock");
 const moduleNames = {
-  "uuid/v4": require("uuid").v4,
-  "@alizeait/uuid": require("../dist/node").v4,
-  nanoid: require("nanoid").nanoid,
+  flat: require("flat"),
+  objnest: require("objnest").flatten,
+  "@alizeait/flatto": require("../dist").flatto,
+  "flatify-obj": require("flatify-obj"),
 };
 console.log("Benchmarks:");
 const bench = new Suite().on("cycle", (e) => {
@@ -12,16 +13,8 @@ const bench = new Suite().on("cycle", (e) => {
 
 Object.keys(moduleNames).forEach((moduleName) => {
   bench.add(moduleName + " ".repeat(28 - moduleName.length), () => {
-    moduleNames[moduleName]();
+    moduleNames[moduleName](mock);
   });
 });
 
 bench.run();
-console.log("\nRFC UUID v4 validation:");
-Object.keys(moduleNames).forEach((moduleName) => {
-  console.log(
-    `  ${moduleName}${" ".repeat(28 - moduleName.length)}${
-      isUUID.v4(moduleNames[moduleName]()) ? "✔" : "✘"
-    }`
-  );
-});
