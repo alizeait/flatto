@@ -6,6 +6,12 @@ Takes a nested object/array and returns a flattened object, e.i. an object with 
 
 It seperates the keys with a `.` by default but this can be changed to anything with the seperator option.
 
+## Installation
+
+```cmd
+$ npm install @alizeait/flatto
+```
+
 ## Usage
 
 ```js
