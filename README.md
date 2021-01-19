@@ -62,15 +62,18 @@ const flattened = flatto({
 }
   */
 
-const flattoCustom = flatto({
-  key1: {
-    keyA: "valueI",
+const flattoCustom = flatto(
+  {
+    key1: {
+      keyA: "valueI",
+    },
+    key2: {
+      keyB: "valueII",
+    },
+    key3: { a: { b: { c: 2 } } },
   },
-  key2: {
-    keyB: "valueII",
-  },
-  key3: { a: { b: { c: 2 } } },
-},'-');
+  "-"
+);
 
 /*
 {
@@ -78,6 +81,7 @@ const flattoCustom = flatto({
   "key2-keyB": "valueII",
   "key3-a-b-c": 2,
 }
+*/
 ```
 
 ## Benchmarks
