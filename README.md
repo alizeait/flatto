@@ -1,4 +1,4 @@
-# @alizeait/uuid ![Check](https://github.com/alizeait/flatto/workflows/Check/badge.svg) ![Coverage](https://img.shields.io/codecov/c/github/alizeait/flatto)
+# @alizeait/flatto ![Check](https://github.com/alizeait/flatto/workflows/Check/badge.svg) ![Coverage](https://img.shields.io/codecov/c/github/alizeait/flatto)
 
 > A tiny (~200B) and [super fast](#benchmarks) nested object flattener.
 
