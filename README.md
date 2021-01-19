@@ -1,40 +1,97 @@
-# @alizeait/uuid ![Check](https://github.com/alizeait/uuid/workflows/Check/badge.svg) ![Coverage](https://img.shields.io/codecov/c/github/alizeait/uuid)
+# @alizeait/uuid ![Check](https://github.com/alizeait/flatto/workflows/Check/badge.svg) ![Coverage](https://img.shields.io/codecov/c/github/alizeait/flatto)
 
-> A tiny (~260B) and [super fast](#benchmarks) [RFC4122](http://www.ietf.org/rfc/rfc4122.txt) compliant v4 UUID generator.
+> A tiny (~200B) and [super fast](#benchmarks) nested object flattener.
 
-Supports both Nodejs and Browser environments while using native cryptography features.
+Takes a nested object/array and returns a flattened object, e.i. an object with a single nested level.
 
-Includes ESM and Commonjs/Nodejs bundles. Allows bundlers like Webpack and Rollup to pick the correct bundle for different environments.
+It seperates the keys with a `.` by default but this can be changed to anything with the seperator option.
 
 ## Usage
 
 ```js
-import { v4 } from "@alizeait/uuid";
+import { flatto } from "@alizeait/flatto";
 
-v4(); //  'dc8c63d6-55e0-49be-9d68-19b0e51be2a6'
-v4(); //  'e3f68a1e-d22b-4c94-bc6b-78b44c1608f3'
+const flattened = flatto({
+  key1: {
+    keyA: "valueI",
+  },
+  key2: {
+    keyB: "valueII",
+  },
+  key3: { a: { b: { c: 2 } } },
+  key4: [],
+  key5: {
+    a: [
+      "value1",
+      "value2",
+      {
+        key1: {
+          keyA: "valueI",
+          keyB: [1, 2, 3, 4],
+        },
+      },
+    ],
+    b: null,
+    c: undefined,
+  },
+  key6: {},
+});
+
+/*
+{
+  "key1.keyA": "valueI",
+  "key2.keyB": "valueII",
+  "key3.a.b.c": 2,
+  "key4": [],
+  "key5.a.0": "value1",
+  "key5.a.1": "value2",
+  "key5.a.2.key1.keyA": "valueI",
+  "key5.a.2.key1.keyB.0": 1,
+  "key5.a.2.key1.keyB.1": 2,
+  "key5.a.2.key1.keyB.2": 3,
+  "key5.a.2.key1.keyB.3": 4,
+  "key5.b": null,
+  "key5.c": undefined,
+  "key6": {}
+}
+  */
+
+const flattoCustom = flatto({
+  key1: {
+    keyA: "valueI",
+  },
+  key2: {
+    keyB: "valueII",
+  },
+  key3: { a: { b: { c: 2 } } },
+},'-');
+
+/*
+{
+  "key1-keyA": "valueI",
+  "key2-keyB": "valueII",
+  "key3-a-b-c": 2,
+}
 ```
 
 ## Benchmarks
 
 ```
-uuid/v4               x 1,006,107 ops/sec ±1.04% (82 runs sampled)
-@alizeait/uuid        x 4,262,898 ops/sec ±0.98% (87 runs sampled)
-nanoid                x 1,779,066 ops/sec ±1.58% (91 runs sampled)
-
-
-RFC UUID v4 validation:
-
-uuid/v4               ✔
-@alizeait/uuid        ✔
-nanoid                ✘
-
+Benchmarks:
+  flat                         x 139,061 ops/sec ±0.70% (90 runs sampled)
+  objnest                      x 52,776 ops/sec ±0.48% (90 runs sampled)
+  @alizeait/flatto             x 335,535 ops/sec ±0.45% (94 runs sampled)
+  flatify-obj                  x 103,834 ops/sec ±0.78% (93 runs sampled)
 ```
 
 > Running on Node.js v12.13.0, 64-bit OS, Intel(R) Core(TM) i5-6600K CPU @ 3.50GHz, 16.0 GB RAM
 
-## Why is `@alizeait/uuid` so fast?
+## API
 
-It first fills a large(6144 bytes) `Uint8Array` typed array buffer with cryptographically strong random values using the browser/nodejs crypto API(Meaning that it fills an array buffer randomly with numbers between 0 and 255). It then generates an array of 2 digit hexadecimal numbers(length=256) and starts slicing off chunks from the buffer as needed, meaning that each buffer is able to supply 384 v4 UUID random invocations. When the buffer is all used up, it generates a new one with the crypto APIs and iterates.
+### flatto(input: Object | Array, seperator?:string)
 
-This caching mechanism allows for faster composition and generation of the uuids.
+Returns: `Object`
+
+Returns a new flattened object that is only one level deep.
+
+If the input is not an object or an array, the input itself is returned instead of an object.
