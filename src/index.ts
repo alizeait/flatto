@@ -1,6 +1,6 @@
 export function flatto<T = Record<string, any>>(
   input: T,
-  seperator: string
+  seperator?: string
 ): T {
   if (typeof input !== "object" || !input) return input;
   return loop(input, {}, "", seperator || ".");
