@@ -8,7 +8,7 @@ It seperates the keys with a `.` by default but this can be changed to anything 
 
 ## Installation
 
-```cmd
+```bash
 $ npm install @alizeait/flatto
 ```
 
