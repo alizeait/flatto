@@ -1,25 +1,14 @@
 {
   "name": "@alizeait/flatto",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "A tiny (~200B) and fast nested object flattener",
   "scripts": {
-    "build": "microbundle",
+    "build": "microbundle -f modern,cjs",
     "dev": "microbundle watch",
     "test": "npx jest"
   },
   "main": "dist/index.js",
-  "module": "dist/index.module.js",
-  "unpkg": "dist/index.umd.js",
-  "browser": "dist/index.modern.js",
-  "exports": {
-    ".": {
-      "browser": "./dist/index.modern.js",
-      "import": "./dist/index.js",
-      "require": "./dist/index.js"
-    },
-    "./package.json": "./package.json",
-    "./": "./"
-  },
+  "module": "dist/index.modern.js",
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",

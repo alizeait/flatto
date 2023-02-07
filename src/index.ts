@@ -1,7 +1,8 @@
-export function flatto<T = Record<string, any>>(
-  input: T,
+export function flatto<Input = Record<string, any>, Output = unknown>(
+  input: Input,
   seperator?: string
-): T {
+): Output {
+  //@ts-ignore
   if (typeof input !== "object" || !input) return input;
   return loop(input, {}, "", seperator || ".");
 }
